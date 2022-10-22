@@ -13,9 +13,45 @@ const web = new WebClient(token);
 const conversationId = "general";
 
 export default async function messageToSlack(data) {
-  const result = await web.chat.postMessage({
-    text: `Hello world! :flag-ar: ${data}`,
+  const result = await web.chat.postEphemeral({
     channel: conversationId,
+    user: "U0HMQ9FA4",
+    blocks: [
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: "Hola, en qué oficina te encuentras?",
+        },
+        accessory: {
+          type: "static_select",
+          placeholder: {
+            type: "plain_text",
+            text: "Selecciona una oficina",
+            emoji: true,
+          },
+          options: [
+            {
+              text: {
+                type: "plain_text",
+                text: "Buenos Aires",
+                emoji: true,
+              },
+              value: "value-0",
+            },
+            {
+              text: {
+                type: "plain_text",
+                text: "Bogotá",
+                emoji: true,
+              },
+              value: "value-1",
+            },
+          ],
+          action_id: "static_select-action",
+        },
+      },
+    ],
   });
 
   // The result contains an identifier for the message, `ts`.
